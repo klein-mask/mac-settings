@@ -1,0 +1,60 @@
+#$PROMPT = "{INTENSE_BLUE}┌{INTENSE_GREEN} [ {cwd} ] {gitstatus}\n{INTENSE_BLUE}└{INTENSE_GREEN} >> "
+#$RIGHT_PROMPT = "{user}@{hostname}"
+#$XONSH_APPEND_NEWLINE = True
+
+def _git_prefix():
+    import xonsh.tools as xt
+
+    prefix = $(git rev-parse --show-prefix).strip()
+    sep = xt.get_sep()
+
+    if len(prefix) == 0:
+        return prefix
+    else:
+        return sep + prefix if prefix[0] != sep else prefix
+
+
+def _git_toplevel_or_cwd():
+    import xonsh.tools as xt
+    from xonsh.prompt.cwd import _replace_home
+
+    toplevel = $(git rev-parse --show-toplevel).strip()
+    pwd = toplevel if toplevel else $PWD
+
+    sep = xt.get_sep()
+    pwd = _replace_home(pwd).split(sep)
+    l = len(pwd)
+    leader = sep if l > 0 and len(pwd[0]) == 0 else ""
+    base = [i[0]
+            if ix != l - 1 and i[0] != '.' else i[0:2]
+            if ix != l - 1 else i for ix, i in enumerate(pwd) if len(i) > 0]
+    return leader + sep.join(base)
+
+
+def _success_color():
+    if __xonsh__.history.rtns and __xonsh__.history.rtns[-1] != 0:
+        return '{#cc6666}'  # red
+    else:
+        return '{#f0c674}'
+
+
+$PROMPT_FIELDS['git_prefix'] = _git_prefix
+$PROMPT_FIELDS['git_toplevel'] = _git_toplevel_or_cwd
+$PROMPT_FIELDS['success_color'] = _success_color
+$EDITOR = '/usr/local/bin/vim'
+$VISUAL = '/usr/local/bin/vim'
+$INDENT = "    "
+$XONSH_AUTOPAIR = True
+$AUTO_CD = True
+$UPDATE_COMPLETIONS_ON_KEYPRESS = True
+# $PROMPT = "{INTENSE_BLACK}[ {INTENSE_WHITE}{git_toplevel}{INTENSE_BLACK}{git_prefix} {INTENSE_BLACK}]\n{success_color}${WHITE} "
+$PROMPT = "{INTENSE_BLACK} [ {INTENSE_BLUE}{cwd} {INTENSE_BLACK}] {gitstatus}\n{INTENSE_GREEN}$ "
+
+aliases['ls'] = "ls --color=auto"
+aliases["l"] = "ls -l"
+aliases["lf"] = "ls -f"
+aliases["ld"] = "ls -d"
+aliases["la"] = "ls -la"
+aliases["ll"] = "ls -l"
+aliases["v"] = "vim"
+aliases["vi"] = "vim"
