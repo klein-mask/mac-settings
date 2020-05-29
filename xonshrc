@@ -1,6 +1,3 @@
-#$PROMPT = "{INTENSE_BLUE}┌{INTENSE_GREEN} [ {cwd} ] {gitstatus}\n{INTENSE_BLUE}└{INTENSE_GREEN} >> "
-#$RIGHT_PROMPT = "{user}@{hostname}"
-#$XONSH_APPEND_NEWLINE = True
 
 def _git_prefix():
     import xonsh.tools as xt
@@ -46,15 +43,16 @@ $VISUAL = '/usr/local/bin/vim'
 $INDENT = "    "
 $XONSH_AUTOPAIR = True
 $AUTO_CD = True
-$UPDATE_COMPLETIONS_ON_KEYPRESS = True
+# $UPDATE_COMPLETIONS_ON_KEYPRESS = True
 # $PROMPT = "{INTENSE_BLACK}[ {INTENSE_WHITE}{git_toplevel}{INTENSE_BLACK}{git_prefix} {INTENSE_BLACK}]\n{success_color}${WHITE} "
 $PROMPT = "{INTENSE_BLACK} [ {INTENSE_BLUE}{cwd} {INTENSE_BLACK}] {gitstatus}\n{INTENSE_GREEN}$ "
 
-aliases['ls'] = "ls --color=auto"
-aliases["l"] = "ls -l"
-aliases["lf"] = "ls -f"
-aliases["ld"] = "ls -d"
-aliases["la"] = "ls -la"
-aliases["ll"] = "ls -l"
-aliases["v"] = "vim"
-aliases["vi"] = "vim"
+aliases['ls'] = 'ls --color=auto'
+aliases["lf"] = 'ls -f'
+aliases["ld"] = 'ls -d'
+aliases["la"] = 'ls -la'
+aliases["ll"] = 'ls -l'
+aliases["vi"] = 'vim'
+
+aliases["gc"] = 'git clone'
+aliases["gs"] = 'git status'
