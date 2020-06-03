@@ -1,4 +1,4 @@
-
+"""
 def _git_prefix():
     import xonsh.tools as xt
 
@@ -34,17 +34,16 @@ def _success_color():
     else:
         return '{#f0c674}'
 
-
 $PROMPT_FIELDS['git_prefix'] = _git_prefix
 $PROMPT_FIELDS['git_toplevel'] = _git_toplevel_or_cwd
 $PROMPT_FIELDS['success_color'] = _success_color
+"""
+
 $EDITOR = '/usr/local/bin/vim'
 $VISUAL = '/usr/local/bin/vim'
 $INDENT = "    "
 $XONSH_AUTOPAIR = True
 $AUTO_CD = True
-# $UPDATE_COMPLETIONS_ON_KEYPRESS = True
-# $PROMPT = "{INTENSE_BLACK}[ {INTENSE_WHITE}{git_toplevel}{INTENSE_BLACK}{git_prefix} {INTENSE_BLACK}]\n{success_color}${WHITE} "
 $PROMPT = "{INTENSE_BLACK} [ {INTENSE_BLUE}{cwd} {INTENSE_BLACK}] {gitstatus}\n{INTENSE_GREEN}$ "
 
 aliases['ls'] = 'ls --color=auto'
